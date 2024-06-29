@@ -83,6 +83,6 @@ contract Staking is ReentrancyGuard{
   }
 }
 
-//stake token deployed address = 0xf9122572e937584b1871ece3fea2c9e522556f6c
-//reward token deployed address = 0x46a923318ff664ec0ccd41d69a1c60800c0beba2
-//staking contract deployed address = 0x55c646dfbe2fe7a7de5525cfcf7e2456df7a9c29
+//stake token deployed address = 0xF8138C7130a7E377CA6AD1bBfAd80504410cF877
+//reward token deployed address = 0x9e3926B30b12FDa1EC821BBb0dc8285F945920A7
+//staking contract deployed address = 0x44d6Cc9262DCa24312bd3Cecfa51D3De7f871C3D
