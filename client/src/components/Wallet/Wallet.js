@@ -10,7 +10,7 @@ const Wallet = ({children}) => {
 		provider: null,
 		account: null,
 		stakingContract: null,
-		stateTokenContract: null,
+		stakeTokenContract: null,
 		chainId: null
 	});
 	const [isLoading, setIsLoading] = useState(false);
@@ -22,21 +22,21 @@ const Wallet = ({children}) => {
 				provider, 
 				account, 
 				stakingContract, 
-				stateTokenContract, 
+				stakeTokenContract, 
 				chainId 
 			} = await connectWallet();
 			console.log(
 				"Provider: ",provider, 
 				"Account: ",account, 
 				"stakingContract: ",stakingContract, 
-				"stateTokenContract: ",stateTokenContract, 
+				"stakeTokenContract: ",stakeTokenContract, 
 				"chainId: ",chainId
 			);
 			setState({
 				provider, 
 				account, 
 				stakingContract, 
-				stateTokenContract, 
+				stakeTokenContract, 
 				chainId
 			});
 		} catch(error) {

@@ -22,7 +22,7 @@ const StakedAmount = () => {
 
 	return(
 		<div>
-			<p>Staked Amount: {stakedAmount} eth</p>
+			<p>Staked Amount: {stakedAmount} token</p>
 		</div>
 	);
 }

@@ -7,7 +7,7 @@ export const connectWallet = async() => {
 		let [
 			provider, 
 			stakingContract, 
-			stateTokenContract, 
+			stakeTokenContract, 
 			chainId
 		] = [null];
 		//check if metmask installed or not
@@ -36,17 +36,17 @@ export const connectWallet = async() => {
 		provider = new ethers.BrowserProvider(window.ethereum); 
 		const signer = await provider.getSigner(); //get acc details, addresses of accounts etc
 	
-		const stakingContractAddress = "0x55c646dfbe2fe7a7de5525cfcf7e2456df7a9c29";
-		const stakeTokenContractAddress = "0xf9122572e937584b1871ece3fea2c9e522556f6c";
+		const stakingContractAddress = "0x44d6Cc9262DCa24312bd3Cecfa51D3De7f871C3D";
+		const stakeTokenContractAddress = "0xF8138C7130a7E377CA6AD1bBfAd80504410cF877";
 	
 		stakingContract = new Contract(stakingContractAddress, stakingAbi, signer); //same as ethers.Contract
-		stateTokenContract = new Contract(stakeTokenContractAddress, stakeTokenAbi, signer); //same as ethers.Contract
+		stakeTokenContract = new Contract(stakeTokenContractAddress, stakeTokenAbi, signer); //same as ethers.Contract
 	
 		return ({
 			provider, 
 			account, 
 			stakingContract, 
-			stateTokenContract, 
+			stakeTokenContract, 
 			chainId
 		})
 	} catch(error) {
