@@ -3,22 +3,20 @@ import Web3Context from '../../context/Web3Context';
 import { ethers } from 'ethers';
 import Button from '../Button/Button';
 
-const TokenApproval = () => {
-	const { stakeTokenContract, stakingContract } = useContext(Web3Context);
+const Withdraw = () => {
+	const { stakingContract } = useContext(Web3Context);
 	const [ transactionStatus, setTransactionStatus ] = useState('');
-	const approvedTokenRef = useRef();
-	const approveToken = async(e) => {
+	const withdrawTokenRef = useRef();
+	const withdrawToken = async(e) => {
 		e.preventDefault(); //prevent form from auto submitting as soon as token is approved
-		const amount = approvedTokenRef.current.value.trim();
+		const amount = withdrawTokenRef.current.value.trim();
 		if(isNaN(amount) || amount <= 0) { //isNan = is not a number
 			console.error('Please enter a valid positive number');
 			return;
 		}
-		const amountToSend = ethers.parseUnits(amount, 18).toString(); //convert to wei so that smart contract can process it
-		//console.log(amountToSend);
-
+		const amountToWithdraw = ethers.parseUnits(amount, 18).toString(); //convert to wei so that smart contract can process it
 		try{
-			const transaction = await stakeTokenContract.approve(stakingContract.target, amountToSend); //stakingContract.target = address of staking contract deployed on sepolia
+			const transaction = await stakingContract.withdrawStakedTokens(amountToWithdraw);
 			//console.log(transaction);
 			setTransactionStatus('Transaction is pending...');
 			const receipt = await transaction.wait();
@@ -27,25 +25,25 @@ const TokenApproval = () => {
 				setTimeout(() => {
 					setTransactionStatus('');
 				}, 5000);
-				approvedTokenRef.current.value = '';
+				withdrawTokenRef.current.value = '';
 			} else {
 				setTransactionStatus('Transaction Failed');
 			}
 		} catch(error) {
-			console.error('Token Approval Failed', error.message);
+			console.error('Token Withdrawing Failed', error.message);
 		}
 	}
 
 	return(
 		<div>
 			{transactionStatus && <div>{transactionStatus}</div>}
-			<form onSubmit = {approveToken}>
-				<label>Token Approval: </label>
-				<input type = 'text' ref = {approvedTokenRef} />
-				<Button onClick = {approveToken} type = 'submit' label = 'Token Approve' />
+			<form onSubmit = {withdrawToken}>
+				<label>Amount to Withdraw: </label>
+				<input type = 'text' ref = {withdrawTokenRef} />
+				<Button onClick = {withdrawToken} type = 'submit' label = 'Withdraw' />
 			</form>
 		</div>
 	);
 }
 
-export default TokenApproval;
+export default Withdraw;

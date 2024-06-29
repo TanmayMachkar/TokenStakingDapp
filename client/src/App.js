@@ -4,6 +4,8 @@ import Navigation from './components/Navigation/Navigation';
 import DisplayPanel from './components/DisplayPanel/DisplayPanel';
 import StakeAmount from './components/StakeToken/StakeAmount';
 import TokenApproval from './components/StakeToken/TokenApproval';
+import Withdraw from './components/Withdraw/Withdraw';
+import ClaimReward from './components/ClaimReward/ClaimReward';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <DisplayPanel />
         <StakeAmount />
         <TokenApproval />
+        <Withdraw />
+        <ClaimReward />
       </ Wallet>
     </div>
   );
