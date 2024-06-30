@@ -4,6 +4,8 @@ import Web3Context from '../../context/Web3Context';
 import Button from '../Button/Button';
 import { handleAccountChange } from '../../utils/handleAccountChange';
 import { handleChainChange } from '../../utils/handleChainChange';
+import { toast } from "react-hot-toast";
+import "./Wallet.css";
 
 const Wallet = ({children}) => {
 	const [state, setState] = useState({
@@ -25,13 +27,13 @@ const Wallet = ({children}) => {
 				stakeTokenContract, 
 				chainId 
 			} = await connectWallet();
-			console.log(
-				"Provider: ",provider, 
-				"Account: ",account, 
-				"stakingContract: ",stakingContract, 
-				"stakeTokenContract: ",stakeTokenContract, 
-				"chainId: ",chainId
-			);
+			// console.log(
+			// 	"Provider: ",provider, 
+			// 	"Account: ",account, 
+			// 	"stakingContract: ",stakingContract, 
+			// 	"stakeTokenContract: ",stakeTokenContract, 
+			// 	"chainId: ",chainId
+			// );
 			setState({
 				provider, 
 				account, 
@@ -40,7 +42,8 @@ const Wallet = ({children}) => {
 				chainId
 			});
 		} catch(error) {
-			console.log('Error connecting wallet: ', error.message);
+			toast.error('Error connecting wallet');
+			console.log(error.message);
 		} finally {
 			setIsLoading(false)
 		}
@@ -65,14 +68,14 @@ const Wallet = ({children}) => {
 	}, [])
 
 	return(
-		<div>
-			<Web3Context.Provider value = {state}>
-				{children}
-			</Web3Context.Provider>
-			{isLoading && (
-				<p>Loading....</p>
-			)}
-			<Button onClick = {handleWallet} label = "Connect Wallet"/>
+		<div className="Connect-Wallet">
+		    <Web3Context.Provider value={state}>
+		    	{children}
+		    </Web3Context.Provider>
+		    {isLoading && <p>Loading...</p>}
+		    <div className = 'CW'>
+		    	<Button onClick={handleWallet} type="button" label="Connect Wallet" />
+			</div>
 		</div>
 	);
 }

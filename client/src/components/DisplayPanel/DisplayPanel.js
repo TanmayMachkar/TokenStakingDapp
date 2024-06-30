@@ -4,7 +4,7 @@ import EarnReward from './EarnReward';
 
 const DisplayPanel = () => {
 	return(
-		<div>
+		<div className = 'top-wrapper'>
 			<StakedAmount />
 			<RewardRate />
 			<EarnReward />

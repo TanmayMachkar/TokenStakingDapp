@@ -1,32 +1,38 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import Web3Context from '../../context/Web3Context';
+import { toast } from "react-hot-toast";
 import Button from '../Button/Button';
+import "./ClaimReward.css";
 
 const ClaimReward = () => {
 	const { stakingContract } = useContext(Web3Context);
-	const [ transactionStatus, setTransactionStatus ] = useState('');
 	const ClaimRewardToken = async(e) => {
 		try{
 			const transaction = await stakingContract.getReward();
 			//console.log(transaction);
-			setTransactionStatus('Transaction is pending...');
-			const receipt = await transaction.wait();
-			if(receipt.status === 1) { //receipt = 1 then transaction is successfull
-				setTransactionStatus('Transaction is Successful');
-				setTimeout(() => {
-					setTransactionStatus('');
-				}, 5000);
-			} else {
-				setTransactionStatus('Transaction Failed');
-			}
+			// const receipt = await transaction.wait();
+			await toast.promise(transaction.wait(),
+		    {
+		      loading: "Transaction is pending...",
+		      success: 'Transaction successful 👌',
+		      error: 'Transaction failed 🤯'
+		    });
+			// if(receipt.status === 1) { //receipt = 1 then transaction is successfull
+			// 	setTransactionStatus('Transaction is Successful');
+			// 	setTimeout(() => {
+			// 		setTransactionStatus('');
+			// 	}, 5000);
+			// } else {
+			// 	setTransactionStatus('Transaction Failed');
+			// }
 		} catch(error) {
-			console.error('Claim Reward Failed', error.message);
+			toast.error('Claim Reward Failed');
+			console.error(error.message);
 		}
 	}
 
 	return(
-		<div>
-			{transactionStatus && <div>{transactionStatus}</div>}
+		<div className = 'claim-reward'>
 			<Button onClick = {ClaimRewardToken} type = 'button' label = 'Claim Reward' />
 		</div>
 	);

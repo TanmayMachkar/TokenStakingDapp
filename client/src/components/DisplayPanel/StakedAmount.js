@@ -1,10 +1,14 @@
 import { useEffect, useState, useContext } from 'react';
 import Web3Context from '../../context/Web3Context';
+import StakingContext from '../../context/StakingContext';
 import { ethers } from 'ethers';
+import { toast } from "react-hot-toast";
+import "./DisplayPanel.css";
 
 const StakedAmount = () => {
 	const { account, stakingContract } = useContext(Web3Context);
 	const [ stakedAmount, setStakedAmount ] = useState('0');
+	const { isReload } = useContext(StakingContext);
 
 	useEffect(() => {
 		const fetchStakeBalance = async() => {
@@ -14,15 +18,17 @@ const StakedAmount = () => {
 				// console.log(amountStakedEth);
 				setStakedAmount(amountStakedEth);
 			}catch(error){
-				console.error('Error Fetching Data: ', error.message);
+				toast.error('Error Fetching Staked Amount: ');
+				console.error(error.message);
 			}
 		}
 		stakingContract && fetchStakeBalance();
-	}, [stakingContract, account]);
+	}, [stakingContract, account, isReload]);
 
 	return(
-		<div>
-			<p>Staked Amount: {stakedAmount} token</p>
+		<div className="staked-amount">
+			<p>Staked Amount: </p>
+			<span>{stakedAmount} token</span>
 		</div>
 	);
 }
